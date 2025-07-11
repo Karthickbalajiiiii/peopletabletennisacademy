@@ -6,21 +6,13 @@
 <title>People Table Tennis Academy</title>
 <link rel="icon" type="image/webp" href="table.webp">
 
-<!-- SEO Meta -->
-<meta name="description" content="Join Chennai’s best table tennis academy. Master strokes, movements and become a champion with us.">
-
-<!-- Open Graph (for Facebook, WhatsApp, LinkedIn) -->
-<meta property="og:title" content="People Table Tennis Academy" />
-<meta property="og:description" content="Join Chennai’s best table tennis academy. Master strokes, movements and become a champion with us." />
-<meta property="og:image" content="https://karthickptta.netlify.app//cover.jpg" />
-<meta property="og:url" content="https://karthickptta.netlify.app//" />
-<meta property="og:type" content="website" />
-
-<!-- Twitter Cards -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="People Table Tennis Academy" />
-<meta name="twitter:description" content="Join Chennai’s best table tennis academy. Master strokes, movements and become a champion with us." />
-<meta name="twitter:image" content="https://karthickptta.netlify.app//cover.jpg" />
+<!-- SEO & Social Meta Tags -->
+<meta name="description" content="People Table Tennis Academy in Chennai: Learn table tennis, shop quality gear, and watch top players. Visit us in Kodambakkam.">
+<meta property="og:title" content="People Table Tennis Academy">
+<meta property="og:description" content="Join our vibrant academy in Chennai. Learn table tennis, watch top players, shop quality gear, and improve your game.">
+<meta property="og:image" content="https://karthickptta.netlify.app/table.webp">
+<meta property="og:url" content="https://karthickptta.netlify.app/">
+<meta name="twitter:card" content="summary_large_image">
 
 <style>
 :root {
@@ -38,7 +30,6 @@ body {
     margin: 0;
     text-align: center;
 }
-/* all your CSS remains unchanged */
 body::before {
     content: "";
     position: fixed; top:0; left:0; width:100%; height:100%;
@@ -191,3 +182,127 @@ input:focus, textarea:focus {
 </style>
 </head>
 <body>
+
+<header>
+    <h1>People Table Tennis Academy</h1>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#moments">Movements</a>
+        <a href="#gallery">Top Players</a>
+        <a href="#shop">Shop</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+</header>
+
+<section id="mainContent">
+    <section id="home">
+        <h2 id="welcomeTitle"><span id="typed"></span></h2>
+        <video autoplay muted loop playsinline><source src="Screen Recording 2025-07-10 125238.mp4" type="video/mp4"></video>
+        <p>Join our vibrant community of table tennis enthusiasts. Whether you're a beginner or a pro, experience thrilling rallies, masterful strokes, and unforgettable moments.</p>
+    </section>
+
+    <section id="moments">
+        <h2 id="momentsTitle">Basic Movements & Strokes</h2>
+        <div class="moments">
+            <div class="item"><img src="forehand.jpeg"><p>Forehand Topspin</p></div>
+            <div class="item"><img src="backhand.jpeg"><p>Backhand Smash</p></div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 id="aboutTitle">About Our Academy</h2>
+        <p style="max-width:800px; margin:auto;">
+            At People Table Tennis Academy, we nurture talent & build a strong table tennis culture. From beginners to champions, our state-of-the-art facilities & coaches help you perfect strokes, spin & strategy.
+        </p>
+    </section>
+
+    <section id="gallery">
+        <h2 id="topPlayersTitle">Top Players</h2>
+        <div class="gallery">
+            <div class="item" onclick="showPlayer('maLong')"><img src="malong.webp"><p>Ma Long</p></div>
+            <div class="item" onclick="showPlayer('manika')"><img src="images.webp"><p>Manika Batra</p></div>
+        </div>
+    </section>
+
+    <section id="shop">
+        <h2 id="shopTitle">Our Shop</h2>
+        <div class="gallery">
+            <div class="item" onclick="showProduct('bat')"><img src="bat.jpg"><p>Bat - ₹1200</p></div>
+            <div class="item" onclick="showProduct('balls')"><img src="balls.jpg"><p>Balls - ₹300</p></div>
+            <div class="item" onclick="showProduct('table')"><img src="table1.jpg"><p>Table - ₹15,000</p></div>
+            <div class="item" onclick="showProduct('net')"><img src="net.png"><p>Net - ₹500</p></div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 id="contactTitle">Contact Us</h2>
+        <form onsubmit="submitForm(event)">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea rows="4" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+        <p style="margin-top:1.5rem;">
+            📞 <strong>+91 98765 43210</strong><br>
+            📧 <strong>info@peopletabletennisacademy.com</strong><br>
+            🏓 <strong>Kodambakkam, Chennai</strong>
+        </p>
+    </section>
+</section>
+
+<section id="productDetail" style="display:none;">
+    <h2 id="productTitle"></h2>
+    <img id="productImage" style="width:50%; border-radius:10px; margin:1rem 0;">
+    <p id="productDesc" style="max-width:800px; margin:auto;"></p>
+    <button onclick="goBack()">Back</button>
+</section>
+
+<script>
+const text = "Welcome to People Table Tennis Academy";
+let idx = 0;
+function type() { if (idx < text.length) { document.getElementById("typed").innerHTML += text.charAt(idx); idx++; setTimeout(type, 100);}}
+type();
+const observer = new IntersectionObserver(entries => {entries.forEach(entry => { if (entry.isIntersecting) {entry.target.classList.add('show'); observer.unobserve(entry.target);}});}, { threshold: 0.1 });
+document.querySelectorAll('section').forEach(section => observer.observe(section));
+
+function showPlayer(playerId) {
+    document.getElementById("mainContent").style.display = "none";
+    const detail = document.getElementById("productDetail");
+    detail.style.display = "block";
+    if(playerId==="maLong"){
+        document.getElementById("productTitle").innerText = "Ma Long";
+        document.getElementById("productImage").src = "malong.webp";
+        document.getElementById("productDesc").innerText = "Ma Long, multi-time Olympic & World Champion, known for explosive forehand.";
+    } else {
+        document.getElementById("productTitle").innerText = "Manika Batra";
+        document.getElementById("productImage").src = "images.webp";
+        document.getElementById("productDesc").innerText = "Manika Batra, India's star with stunning spins & fearless style.";
+    }
+}
+function showProduct(product){
+    document.getElementById("mainContent").style.display = "none";
+    const detail = document.getElementById("productDetail");
+    detail.style.display = "block";
+    let data = {
+        bat:["Professional Bat","bat.jpg","Premium bat with carbon layers. Price: ₹1200"],
+        balls:["Pack of Balls","balls.jpg","40+ ITTF approved seamless balls. Price: ₹300"],
+        table:["Full Size Table","table1.jpg","Tournament size foldable table. Price: ₹15,000"],
+        net:["Net & Post","net.png","Durable clamp net set. Price: ₹500"]
+    };
+    let [title,img,desc] = data[product];
+    document.getElementById("productTitle").innerText = title;
+    document.getElementById("productImage").src = img;
+    document.getElementById("productDesc").innerText = desc;
+}
+function goBack(){
+    document.getElementById("productDetail").style.display="none";
+    document.getElementById("mainContent").style.display="block";
+}
+function submitForm(event){
+    event.preventDefault();
+    alert("Thank you for contacting us! We'll get back to you soon.");
+    event.target.reset();
+}
+</script>
+</body>
+</html>
