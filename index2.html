@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>People Table Tennis Academy</title>
+<link rel="icon" type="image/webp" href="table.webp">
+<style>
+    :root {
+        --cyan: #00b4d8;
+        --gold: #f9c74f;
+        --green: #90be6d;
+        --text-light: #f1faee;
+        --background-dark: #000;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: var(--background-dark);
+        color: var(--text-light);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        text-align: center;
+    }
+
+    /* floating bubbles background */
+    body::before {
+        content: "";
+        position: fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px);
+        background-size: 50px 50px;
+        animation: moveBubbles 10s linear infinite;
+        z-index: 0;
+    }
+    body > * {
+        position: relative;
+        z-index: 1;
+    }
+    @keyframes moveBubbles {
+        from { background-position: 0 0; }
+        to { background-position: 100px 100px; }
+    }
+
+    header {
+        background: linear-gradient(-45deg, #111, #222, #333, #111);
+        background-size: 400% 400%;
+        animation: gradientBG 10s ease infinite;
+        padding: 1.2rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%;}
+        50% { background-position: 100% 50%;}
+        100% { background-position: 0% 50%;}
+    }
+    header h1 {
+        color: var(--cyan);
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    nav a {
+        color: var(--text-light);
+        margin: 0 1rem;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+    }
+    nav a::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: -3px;
+        left: 0;
+        background-color: var(--gold);
+        transform-origin: bottom right;
+        transition: transform 0.3s ease-out;
+    }
+    nav a:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+    }
+
+    section {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 1rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    section.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    #home {
+        margin-top: 5rem;
+    }
+
+    h2#welcomeTitle, h2#momentsTitle, h2#aboutTitle, h2#topPlayersTitle, h2#contactTitle {
+        margin: 2.5rem 0 1.2rem;
+        font-size: 2.4rem;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 0.5rem;
+    }
+
+    h2#welcomeTitle::after {
+        content: "";
+        position: absolute;
+        width: 50%;
+        height: 4px;
+        left: 25%;
+        bottom: 0;
+        background: var(--cyan);
+        border-radius: 5px;
+    }
+    h2#momentsTitle::after {
+        background: var(--gold);
+    }
+    h2#aboutTitle::after {
+        background: var(--cyan);
+    }
+    h2#topPlayersTitle::after {
+        background: var(--green);
+    }
+    h2#contactTitle::after {
+        background: var(--gold);
+    }
+
+    video {
+        width: 80%;
+        border-radius: 10px;
+        margin: 2rem 0;
+        transition: transform 0.5s;
+    }
+    video:hover {
+        transform: scale(1.03);
+    }
+
+    .moments, .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+    }
+
+    .item {
+        background: rgba(17, 17, 17, 0.8);
+        backdrop-filter: blur(5px);
+        padding: 1rem;
+        border-radius: 10px;
+        width: 28%;
+        transition: transform 0.4s, box-shadow 0.4s;
+    }
+    .item img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+    .item p {
+        margin-top: 0.8rem;
+        font-size: 1rem;
+    }
+    .item:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 8px 20px rgba(249, 199, 79, 0.4);
+    }
+
+    .clickable {
+        cursor: pointer;
+        color: var(--gold);
+        text-decoration: underline;
+    }
+
+    button {
+        margin-top: 2rem;
+        padding: 0.6rem 2.5rem;
+        background: var(--cyan);
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.3s;
+    }
+    button:hover {
+        background: #48cae4;
+        transform: scale(1.05);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        max-width: 500px;
+        margin: 2rem auto;
+    }
+    input, textarea {
+        padding: 0.8rem;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+    }
+    input:focus, textarea:focus {
+        box-shadow: 0 0 5px var(--cyan);
+    }
+
+    @media (max-width: 768px) {
+        .item { width: 45%; }
+    }
+    @media (max-width: 480px) {
+        .item { width: 90%; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>People Table Tennis Academy</h1>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#moments">Movements & Strokes</a>
+        <a href="#gallery">Top Players</a>
+    </nav>
+</header>
+
+<section id="mainContent">
+    <section id="home">
+        <h2 id="welcomeTitle"><span id="typed"></span></h2>
+        <video autoplay muted loop playsinline>
+            <source src="Screen Recording 2025-07-10 125238.mp4" type="video/mp4">
+        </video>
+        <p>Join our vibrant community of table tennis enthusiasts. Whether you're a beginner or a pro, experience thrilling rallies, masterful strokes, and unforgettable moments in our academy.</p>
+    </section>
+
+    <section id="moments">
+        <h2 id="momentsTitle">Basic Movements & Strokes</h2>
+        <div class="moments">
+            <div class="item">
+                <img src="forehand.jpeg" alt="Forehand Topspin">
+                <p>Forehand Topspin</p>
+            </div>
+            <div class="item">
+                <img src="backhand.jpeg" alt="Backhand Smash">
+                <p>Backhand Smash</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 id="aboutTitle">About Our Academy</h2>
+        <p style="max-width:800px; margin:auto;">
+            At People Table Tennis Academy, we believe in nurturing talent and building a strong table tennis culture from the grassroots. 
+            Our state-of-the-art facilities and certified coaches help players of all ages and skill levels sharpen their game — from perfecting footwork and strokes to mastering advanced spin techniques. 
+            Beyond training, we organize regular tournaments and fun events that bring together a vibrant community of table tennis enthusiasts. 
+            Whether you dream of representing at the highest levels or simply want to enjoy the sport, our academy is the perfect place to learn, compete, and create lifelong memories.
+        </p>
+    </section>
+
+    <section id="gallery">
+        <h2 id="topPlayersTitle">Top Players</h2>
+        <div class="gallery">
+            <div class="item">
+                <img src="malong.webp" alt="Ma Long">
+                <p><span class="clickable" onclick="showPlayer('maLong')">Ma Long</span></p>
+            </div>
+            <div class="item">
+                <img src="images.webp" alt="Manika Batra">
+                <p><span class="clickable" onclick="showPlayer('manika')">Manika Batra</span></p>
+            </div>
+        </div>
+    </section>
+</section>
+
+<section id="maLong" style="display:none;">
+    <h2 style="color:var(--cyan);">Ma Long</h2>
+    <img src="malong.webp" alt="Ma Long" style="width:50%; border-radius:10px; margin-bottom:1rem;">
+    <h2 style="color:var(--green);">Ma Long, the undisputed king of table tennis, is a multi-time Olympic and World Champion whose explosive forehand and iron-willed focus have redefined the sport. A true legend, he dominates the table with grace, power, and a champion’s mindset — inspiring fans across the globe.</h2>
+    <video autoplay muted loop playsinline>
+        <source src="clideo_editor_69d4a95656404386998a398660fa575b.mp4" type="video/mp4">
+    </video>
+    <button onclick="goBack()">Back to Home</button>
+</section>
+
+<section id="manika" style="display:none;">
+    <h2 style="color:var(--gold);">Manika Batra</h2>
+    <img src="images.webp" alt="Manika Batra" style="width:50%; border-radius:10px; margin-bottom:1rem;">
+    <h2 style="color:var(--green);">Manika Batra is India’s table tennis sensation — a fearless trailblazer who dazzles with her crafty spins and big-match temperament. From winning Commonwealth gold to rewriting Olympic history, she’s a symbol of passion and perseverance, lighting the path for a new generation.</h2>
+    <video autoplay muted loop playsinline>
+        <source src="Screen Recording 2025-07-10 141512.mp4" type="video/mp4">
+    </video>
+    <button onclick="goBack()">Back to Home</button>
+</section>
+
+<section id="contact">
+    <h2 id="contactTitle">Contact Us</h2>
+    <form onsubmit="submitForm(event)">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+    <p style="margin-top:1.5rem;">
+        📞 <strong>+91 98765 43210</strong><br>
+        📧 <strong>peopletabletennisacademy.com</strong><br>
+        🏓 <strong>Kodambakkam, Chennai</strong>
+    </p>
+</section>
+
+<script>
+function showPlayer(playerId) {
+    document.getElementById("mainContent").style.display = "none";
+    document.getElementById(playerId).style.display = "block";
+    window.scrollTo(0, 0);
+}
+function goBack() {
+    document.getElementById("mainContent").style.display = "block";
+    document.getElementById("maLong").style.display = "none";
+    document.getElementById("manika").style.display = "none";
+    window.scrollTo(0, 0);
+}
+function submitForm(event) {
+    event.preventDefault();
+    alert("Thank you for contacting us! We'll get back to you soon.");
+    event.target.reset();
+}
+// Fade in sections on scroll
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('section').forEach(section => {
+    observer.observe(section);
+});
+// Typing effect
+const text = "Welcome to People Table Tennis Academy";
+let idx = 0;
+function type() {
+    if (idx < text.length) {
+        document.getElementById("typed").innerHTML += text.charAt(idx);
+        idx++;
+        setTimeout(type, 100);
+    }
+}
+type();
+</script>
+</body>
+</html>
